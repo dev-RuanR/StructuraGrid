@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StructuraGrid</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    body {
+        margin: 0;
+        background: #f5f6f8;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.2em;
+        min-height: 100vh;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+        background: #bdb9bb;
+        padding: 36px 24px;
+        border-radius: 0 0 20px 20px;
+        gap: 48px;
+        margin-top: 32px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 10;
+        width: calc(100vw - 48px);
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100vw;
+    }
+    .navbar .brand {
+        color: #b23a3a;
+        font-weight: bold;
+        font-size: 1.5em;
+        margin-right: 28px;
+        letter-spacing: 2px;
+    }
+    .navbar a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 1.2em;
+        transition: color 0.2s;
+    }
+    .navbar a:hover {
+        color: #b23a3a;
+    }
+    .navbar .login {
+        background: #b23a3a;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 28px;
+        margin-left: auto;
+        margin-right: 10px;
+        font-weight: bold;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .navbar .cadastro {
+        background: #fff;
+        color: #b23a3a;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 28px;
+        font-weight: bold;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .navbar .lang {
+        background: #b23a3a;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin-left: 16px;
+        font-weight: bold;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .main-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 380px); /* Centraliza verticalmente, ajustando para navbar e footer */
+        padding: 0 80px;
+        box-sizing: border-box;
+    }
+    .main-left {
+        max-width: 700px;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        height: 100%;
+    }
+    .main-left h2 {
+        font-size: 2em;
+        font-weight: 400;
+        margin: 0 0 16px 0;
+    }
+    .main-left h1 {
+        font-size: 3em;
+        font-family: 'Orbitron', Arial, sans-serif;
+        font-weight: 700;
+        margin: 0 0 16px 0;
+    }
+    .main-left h1 .red {
+        color: #b23a3a;
+    }
+    .main-left p {
+        font-size: 1.2em;
+        color: #222;
+        margin-bottom: 32px;
+    }
+    .main-left .btns {
+        display: flex;
+        gap: 16px;
+    }
+    .main-left .btn-main {
+        background: #b23a3a;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 36px;
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .main-left .btn-sec {
+        background: #b23a3a;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 24px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .main-right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 0;
+    }
+    .main-right .logo-s {
+        font-family: 'Orbitron', Arial, sans-serif;
+        font-size: 9em;
+        color: #b23a3a;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        line-height: 0.8;
+        white-space: pre;
+    }
+    .footer-graphic {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 180px;
+        z-index: -1;
+        pointer-events: none;
+        display: block;
+    }
+    @media (max-width: 900px) {
+        .navbar {
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px 8px;
+            width: 100vw;
+        }
+        .main-content {
+            flex-direction: column;
+            padding: 32px 12px 0 12px;
+            min-height: 60vh;
+        }
+        .main-right {
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .footer-graphic {
+            width: 100vw;
+            right: 0;
+            left: 0;
+        }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <span class="brand">StructuraGrid</span>
+    <a href="#">Features</a>
+    <a href="#">Plataformas</a>
+    <a href="#">Sobre</a>
+    <button class="login">Login</button>
+    <button class="cadastro">Cadastro</button>
+    <button class="lang">PT ▼</button>
+  </nav>
+
+  <div class="main-content">
+    <div class="main-left">
+      <h2>Organize e gerencie</h2>
+      <h1>como uma <span class="red">S</span>tructura firme</h1>
+      <p>Monitoramento em tempo real</p>
+      <div class="btns">
+        <button class="btn-main">Faça parte</button>
+        <button class="btn-sec">Leia mais</button>
+      </div>
+    </div>
+    <div class="main-right">
+      <pre class="logo-s"></pre>
+    </div>
+  </div>
+  
+  <footer>
+    <svg class="footer-graphic" viewBox="0 0 1440 180" width="100%" height="180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 180L80 160C160 140 320 100 480 120C640 140 800 220 960 200C1120 180 1280 100 1360 60L1440 20V180H1360C1280 180 1120 180 960 180C800 180 640 180 480 180C320 180 160 180 80 180H0Z" fill="#b23a3a"/>
+      <path d="M0 180L80 170C160 160 320 120 480 140C640 160 800 240 960 220C1120 200 1280 120 1360 80L1440 40V180H1360C1280 180 1120 180 960 180C800 180 640 180 480 180C320 180 160 180 80 180H0Z" fill="#8d2323"/>
+    </svg>
+  </footer>
+</body>
+</html>
