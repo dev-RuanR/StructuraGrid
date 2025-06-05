@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Usuário Administrador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            font-family: 'Montserrat', Arial, sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 32px 48px 0 48px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #b23a3a;
+        }
+        .logo .s {
+            font-family: 'Orbitron', Arial, sans-serif;
+            color: #b23a3a;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-right: 2px;
+        }
+        .logo .s-art {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.1em;
+            color: #b23a3a;
+            margin-right: 8px;
+        }
+        .logo-text {
+            color: #222;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1em;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        .title {
+            flex: 1;
+            text-align: center;
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 2.2em;
+            font-weight: 400;
+            color: #222;
+            margin-top: 90px;
+            margin-right: 100px;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 140px;
+        }
+        .form-row {
+            display: flex;
+            gap: 48px;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 320px;
+            padding: 18px 24px;
+            border: none;
+            border-radius: 16px;
+            background: #a7a5a7;
+            color: #222;
+            font-size: 2em;
+            font-family: 'Orbitron', Arial, sans-serif;
+            margin-bottom: 0;
+            outline: none;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="password"]::placeholder {
+            color: #222;
+            opacity: 1;
+        }
+        input[type="text"]:hover,
+        input[type="email"]:hover,
+        input[type="password"]:hover {
+            background: #bdb9bb;
+            box-shadow: 0 0 0 2px #b23a3a33;
+        }
+        .input-group .toggle-password {
+            position: absolute;
+            right: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3em;
+            color: #222;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            top: 0;
+            bottom: 0;
+        }
+        .input-group .toggle-password:hover {
+            color: #b23a3a;
+        }
+        .form-row.single {
+            justify-content: center;
+        }
+        .continue-btn {
+            margin-top: 32px;
+            background: #e57373;
+            color: #222;
+            border: none;
+            border-radius: 14px;
+            padding: 18px 48px;
+            font-size: 2em;
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .continue-btn:hover {
+            background: #b23a3a;
+            color: #fff;
+        }
+        .footer-graphic {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 180px;
+            z-index: -1;
+            pointer-events: none;
+            display: block;
+        }
+        @media (max-width: 900px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                padding: 24px 8px 0 8px;
+            }
+            .title {
+                margin-right: 0;
+                margin-top: 16px;
+                font-size: 1.3em;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 24px;
+            }
+            input[type="text"], input[type="email"], input[type="password"] {
+                width: 90vw;
+                font-size: 1.2em;
+            }
+            .continue-btn {
+                width: 90vw;
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="s-art">S</span>
+            <span class="logo-text">tructuraGrid</span>
+        </div>
+        <div class="title">Criar Usuário Administrador</div>
+        <div style="width:180px"></div>
+    </div>
+    <form class="form-container">
+        <div class="form-row">
+            <input type="text" placeholder="Nome Completo" required>
+            <input type="email" placeholder="Endereço de Email" required>
+        </div>
+        <div class="form-row">
+            <div class="input-group">
+                <input type="password" placeholder="Senha" id="senha" required>
+                <button type="button" class="toggle-password" tabindex="-1" onclick="togglePassword('senha', this)">
+                </button>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Confirmar Senha" id="confirmarSenha" required>
+                <button type="button" class="toggle-password" tabindex="-1" onclick="togglePassword('confirmarSenha', this)">
+                </button>
+            </div>
+        </div>
+        <div class="form-row single">
+            <input type="text" id="telefone" placeholder="Telefone/WhatsApp (DDD)" maxlength="15" oninput="maskTelefone(this)" style="font-size: 22px;">
+        </div>
+        <button type="submit" class="continue-btn">Continuar</button>
+    </form>
+    
+    
+    <script>
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+
+        function maskTelefone(input) {
+            let value = input.value.replace(/\D/g, "");
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 0) {
+                value = value.replace(/^(\d{0,2})/, function(_, ddd) {
+                    return ddd ? `(${ddd}` : "";
+                });
+            }
+            if (value.length > 2) {
+                value = value.replace(/^\((\d{2})(\d{0,5})/, function(_, ddd, first) {
+                    return `(${ddd}) ${first}`;
+                });
+            }
+            if (value.length > 7) {
+                value = value.replace(/(\d{5})(\d{0,4})$/, "$1-$2");
+            }
+            input.value = value;
+        }
+    </script>
+</body>
+</html>
