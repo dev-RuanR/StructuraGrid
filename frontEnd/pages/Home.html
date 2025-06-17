@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburgueria - Sistema</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            background: #181a1b;
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #212529;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            transition: width 0.3s cubic-bezier(.4, 2, .6, 1), background 0.2s;
+            z-index: 100;
+        }
+
+        .sidebar.minimized {
+            width: 72px;
+        }
+
+        .sidebar .sidebar-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 1.5rem 1rem 1rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: padding 0.3s;
+            position: relative;
+        }
+
+        .sidebar.minimized .sidebar-header {
+            justify-content: center;
+            padding: 1.5rem 0 1rem 0;
+            gap: 6px;
+        }
+
+        .sidebar .toggle-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            outline: none;
+        }
+
+        .sidebar .return-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar.minimized .toggle-btn {
+            display: none;
+        }
+
+        .sidebar.minimized .return-btn {
+            display: inline-flex;
+        }
+
+        .sidebar .sidebar-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .sidebar .sidebar-label {
+            color: #fff;
+        }
+
+        .sidebar.minimized .sidebar-label {
+            display: none;
+        }
+
+        .sidebar .nav {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .sidebar .nav-link {
+            width: 100%;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s, padding 0.3s;
+            margin-bottom: 5px;
+            padding: 0 1.5rem;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link i {
+            font-size: 1.5rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .sidebar .nav-link.active,
+        .sidebar .nav-link:hover {
+            background: #b6358f;
+            color: #fff;
+        }
+
+        .sidebar .nav-link.active i,
+        .sidebar .nav-link:hover i {
+            color: #fff;
+        }
+
+        .sidebar.minimized .nav-link {
+            justify-content: center;
+            padding: 0;
+            background: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 8px auto;
+        }
+
+        .sidebar.minimized .nav-link span {
+            display: none;
+        }
+
+        .sidebar .nav-link span {
+            transition: opacity 0.2s;
+        }
+
+        .sidebar.minimized .nav-link i {
+            color: #fff;
+        }
+
+        .sidebar.minimized .nav-link.active,
+        .sidebar.minimized .nav-link:hover {
+            background: #0d6efd;
+            color: #fff;
+            transform: scale(1.03);
+        }
+
+        .sidebar .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid #343a40;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar.minimized .sidebar-footer {
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .sidebar .sidebar-footer img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .sidebar .sidebar-footer span {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .sidebar.minimized .sidebar-footer span {
+            display: none;
+        }
+
+        .sidebar.minimized .sidebar-footer i {
+            color: #fff;
+            margin-left: 4px;
+            font-size: 1rem;
+        }
+
+        .sidebar .divider {
+            border-bottom: 1px solid #343a40;
+            margin: 0.5rem 0;
+        }
+
+        /* Main content area */
+        .main-content {
+            margin-left: 250px;
+            transition: margin-left 0.3s cubic-bezier(.4, 2, .6, 1);
+            background: #181a1b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .sidebar.minimized~.main-content {
+            margin-left: 72px;
+        }
+
+        /* Barra de atalhos fixa no rodapé, pequena */
+        .main-menu-bar {
+            position: fixed;
+            left: 250px;
+            right: 0;
+            bottom: 0;
+            height: 48px;
+            background: #23272a;
+            border-top: 1px solid #292d31;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 101;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+            transition: left 0.3s cubic-bezier(.4, 2, .6, 1);
+        }
+
+        .sidebar.minimized~.main-menu-bar {
+            left: 72px;
+        }
+
+        .main-menu-item {
+            flex: 0 0 44px;
+            min-width: 44px;
+            max-width: 44px;
+            height: 44px;
+            margin: 0 4px;
+            text-align: center;
+            padding: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            color: #fff;
+            background: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: relative;
+        }
+
+        .main-menu-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 0;
+        }
+
+        .main-menu-item .menu-label,
+        .main-menu-item .menu-label-secondary,
+        .main-menu-item .menu-shortcut {
+            display: none;
+        }
+
+        .main-menu-item:hover,
+        .main-menu-item.active {
+            background: #292d31;
+            color: #b6358f;
+        }
+
+        .main-menu-item[style*="pointer-events:none"] {
+            opacity: 0.5;
+        }
+
+        /* Barra de pesquisa e rodapé centralizados */
+        .search-footer-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            background: #23272a;
+            padding: 24px 0 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #23272a;
+            border-radius: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 8px 20px;
+            min-width: 340px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1.1rem;
+            width: 100%;
+            padding: 6px 8px;
+        }
+
+        .search-box i {
+            color: #b6358f;
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        .footer-bar-central {
+            font-size: 1rem;
+            color: #bbb;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Kanban styles */
+        .main-area {
+            background: #23272a;
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-x: auto;
+            padding-top: 0;
+        }
+
+        .kanban-board {
+            display: flex;
+            gap: 32px;
+            padding: 40px 24px;
+            width: 100%;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .kanban-card {
+            background: #23272a;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18), 0 1.5px 4px rgba(0, 0, 0, 0.10);
+            width: 270px;
+            min-width: 270px;
+            max-width: 270px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 22px 18px 18px 18px;
+            transition: box-shadow 0.2s, transform 0.2s, border 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+        }
+
+        .kanban-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        }
+
+        .kanban-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .kanban-desc {
+            font-size: 1rem;
+            color: #bbb;
+            text-align: center;
+        }
+
+        .kanban-card:hover {
+            box-shadow: 0 8px 32px rgba(182, 53, 143, 0.18), 0 2px 8px rgba(0, 0, 0, 0.13);
+            border: 2px solid #b6358f;
+            transform: translateY(-4px) scale(1.03);
+        }
+
+        /* Frequent/Saved pages - Melhor visual e espaçamento */
+        .pages-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 40px;
+            margin: 32px 0 32px 0;
+            padding: 0 24px;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        .pages-list {
+            background: #23272a;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+            padding: 24px 28px 20px 28px;
+            flex: 1 1 320px;
+            max-width: 380px;
+            min-width: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+
+        .pages-list h5 {
+            color: #b6358f;
+            font-size: 1.15rem;
+            margin-bottom: 18px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .pages-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .pages-list li {
+            color: #fff;
+            font-size: 1.07rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0 8px 0;
+            border-radius: 8px;
+            transition: background 0.18s;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .pages-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .pages-list li i {
+            color: #b6358f;
+            font-size: 1.18rem;
+        }
+
+        .pages-list li:hover {
+            background: #292d31;
+        }
+
+        .footer-bar {
+            font-size: 0.95rem;
+            background: #23272a;
+            border-top: 1px solid #343a40;
+            padding: 4px 12px;
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .main-menu-bar {
+                left: 72px;
+            }
+
+            .main-content {
+                margin-left: 72px;
+            }
+
+            .kanban-board {
+                gap: 16px;
+                padding: 24px 4px;
+            }
+
+            .kanban-card {
+                width: 200px;
+                min-width: 200px;
+                max-width: 200px;
+                padding: 14px 8px 12px 8px;
+            }
+
+            .kanban-card img {
+                height: 80px;
+            }
+
+            .pages-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+                max-width: 100%;
+                padding: 0 8px;
+            }
+
+            .pages-list {
+                min-width: 0;
+                width: 100%;
+                max-width: 420px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div>
+            <div class="sidebar-header">
+                <button class="toggle-btn" id="toggleSidebar" title="Minimizar">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <span class="sidebar-title">S</span>
+                <button class="return-btn" id="returnSidebar" title="Expandir">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                <span class="sidebar-label" style="margin-left:0.1px;">tructuraGrid</span>
+            </div>
+            <div class="divider"></div>
+            <nav class="nav">
+                <a class="nav-link" href="Home.html" title="Principal"><i class="bi bi-house-door"></i>
+                    <span>Principal</span></a>
+                <a class="nav-link" href="#" title="Conteúdos"><i class="bi bi-journal-text"></i>
+                    <span>Conteúdos</span></a>
+                <a class="nav-link" href="#" title="Benefícios"><i class="bi bi-gift"></i> <span>Benefícios</span></a>
+                <a class="nav-link" href="financeiro.html" title="Financeiro"><i class="bi bi-cash-stack"></i>
+                    <span>Financeiro</span></a>
+                <a class="nav-link" href="#" title="Relatórios"><i class="bi bi-bar-chart"></i>
+                    <span>Relatórios</span></a>
+                <a class="nav-link" href="#" title="Apps"><i class="bi bi-app"></i> <span>Apps</span></a>
+                <a class="nav-link" href="#" title="Configurações"><i class="bi bi-gear"></i>
+                    <span>Configurações</span></a>
+            </nav>
+        </div>
+        <div class="sidebar-footer">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User">
+            <span>mdo <i class="bi bi-caret-down-fill"></i></span>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Barra de pesquisa + rodapé centralizados -->
+        <div class="search-footer-bar">
+            <form class="search-box" role="search" autocomplete="off">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Pesquisar no sistema..." aria-label="Pesquisar">
+            </form>
+            <div class="footer-bar-central">
+                Usuário: <span class="text-primary" style="color:#b6358f;">miguel ramos dos santos</span>
+                <span class="text-muted" style="color:#bbb;">administrador</span>
+            </div>
+        </div>
+
+        <!-- Páginas usadas frequentemente e salvas -->
+        <div class="pages-section">
+            <div class="pages-list">
+                <h5><i class="bi bi-clock-history"></i> Usados frequentemente</h5>
+                <ul>
+                    <li><i class="bi bi-cash-register"></i> Abrir/Fechar Caixa</li>
+                    <li><i class="bi bi-table"></i> Mesas/Comandas</li>
+                    <li><i class="bi bi-truck"></i> Delivery</li>
+                    <li><i class="bi bi-cart"></i> Caixa/PDV</li>
+                </ul>
+            </div>
+            <div class="pages-list">
+                <h5><i class="bi bi-bookmark-heart"></i> Páginas salvas</h5>
+                <ul>
+                    <li><i class="bi bi-calendar-event"></i> Agendados</li>
+                    <li><i class="bi bi-people"></i> Clientes</li>
+                    <li><i class="bi bi-bar-chart"></i> Relatórios</li>
+                    <li><i class="bi bi-gear"></i> Configurações</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Área central: Kanban -->
+        <div class="main-area">
+            <div class="kanban-board">
+                <!-- Card 1 -->
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80"
+                        alt="Hambúrguer Artesanal">
+                    <div class="kanban-title">Novo Pedido</div>
+                    <div class="kanban-desc">Pedidos recém-chegados aguardando preparo.</div>
+                </div>
+                <!-- Card 2 -->
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
+                        alt="Preparando Pedido">
+                    <div class="kanban-title">Em Preparo</div>
+                    <div class="kanban-desc">Pedidos sendo preparados na cozinha.</div>
+                </div>
+                <!-- Card 3 -->
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
+                        alt="Pedido Pronto">
+                    <div class="kanban-title">Pronto para Entrega</div>
+                    <div class="kanban-desc">Pedidos prontos aguardando retirada ou entrega.</div>
+                </div>
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80"
+                        alt="Hambúrguer Artesanal">
+                    <div class="kanban-title">Novo Pedido</div>
+                    <div class="kanban-desc">Pedidos recém-chegados aguardando preparo.</div>
+                </div>
+                <!-- Card 2 -->
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
+                        alt="Preparando Pedido">
+                    <div class="kanban-title">Em Preparo</div>
+                    <div class="kanban-desc">Pedidos sendo preparados na cozinha.</div>
+                </div>
+                <!-- Card 3 -->
+                <div class="kanban-card">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
+                        alt="Pedido Pronto">
+                    <div class="kanban-title">Pronto para Entrega</div>
+                    <div class="kanban-desc">Pedidos prontos aguardando retirada ou entrega.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de atalhos fixa no rodapé -->
+    <div class="main-menu-bar" id="mainMenuBar">
+        <div class="main-menu-item active" title="Abrir / Fechar Caixa">
+            <i class="bi bi-cash-register"></i>
+        </div>
+        <div class="main-menu-item" title="Mesas / Comandas">
+            <i class="bi bi-table"></i>
+        </div>
+        <div class="main-menu-item" title="Delivery">
+            <i class="bi bi-truck"></i>
+        </div>
+        <div class="main-menu-item" title="Caixa / PDV">
+            <i class="bi bi-cart"></i>
+        </div>
+        <div class="main-menu-item" style="pointer-events:none;" title="Fila de Atendimento">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="main-menu-item" title="Cardápio Online">
+            <img src="https://static.menu-dino.com.br/img/logo-menudino.png" alt="MenuDino">
+        </div>
+        <div class="main-menu-item" title="Agendados">
+            <i class="bi bi-calendar-event"></i>
+        </div>
+        <div class="main-menu-item" title="Clientes">
+            <i class="bi bi-people"></i>
+        </div>
+        <div class="main-menu-item" title="Bot WhatsApp">
+            <i class="bi bi-whatsapp" style="color:#25d366"></i>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const returnBtn = document.getElementById('returnSidebar');
+        const mainContent = document.getElementById('mainContent');
+        const mainMenuBar = document.getElementById('mainMenuBar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.add('minimized');
+            mainContent.style.marginLeft = '72px';
+            mainMenuBar.style.left = '72px';
+        });
+
+        returnBtn.addEventListener('click', () => {
+            sidebar.classList.remove('minimized');
+            mainContent.style.marginLeft = '250px';
+            mainMenuBar.style.left = '72px';
+            mainMenuBar.style.left = '72px';
+        });
+
+        returnBtn.addEventListener('click', () => {
+            sidebar.classList.remove('minimized');
+            mainContent.style.marginLeft = '250px';
+            mainMenuBar.style.left = '250px';
+        });
+
+        // Hover efeito para main-menu-item
+        document.querySelectorAll('.main-menu-item:not([style*="pointer-events:none"])').forEach(item => {
+            item.addEventListener('mouseenter', () => item.classList.add('active'));
+            item.addEventListener('mouseleave', () => item.classList.remove('active'));
+        });
+    </script>
+</body>
+
+</html>
