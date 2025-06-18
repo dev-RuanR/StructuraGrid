@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos - StructuraGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assests/css/Conteudo.css">
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div>
+            <div class="sidebar-header">
+                <button class="toggle-btn" id="toggleSidebar" title="Minimizar">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <span class="sidebar-title">S</span>
+                <button class="return-btn" id="returnSidebar" title="Expandir" style="display:none;">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                <span class="sidebar-label" style="margin-left:0.1px;">tructuraGrid</span>
+            </div>
+            <div class="divider"></div>
+            <nav class="nav">
+                <a class="nav-link" href="Home.html" title="Principal"><i class="bi bi-house-door"></i>
+                    <span>Principal</span></a>
+                <a class="nav-link" href="#" title="Conteúdos"><i class="bi bi-journal-text"></i>
+                    <span>Conteúdos</span></a>
+                <a class="nav-link" href="#" title="Benefícios"><i class="bi bi-gift"></i> <span>Benefícios</span></a>
+                <a class="nav-link" href="financeiro.html" title="Financeiro"><i class="bi bi-cash-stack"></i>
+                    <span>Financeiro</span></a>
+                <a class="nav-link" href="#" title="Relatórios"><i class="bi bi-bar-chart"></i>
+                    <span>Relatórios</span></a>
+                <a class="nav-link" href="#" title="Apps"><i class="bi bi-app"></i> <span>Apps</span></a>
+                <a class="nav-link" href="#" title="Configurações"><i class="bi bi-gear"></i>
+                    <span>Configurações</span></a>
+            </nav>
+        </div>
+        <div class="sidebar-footer">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User">
+            <span>mdo <i class="bi bi-caret-down-fill"></i></span>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Barra de ações superior -->
+        <div class="top-actions-bar">
+            <button class="top-action-btn" title="Imprimir"><i class="bi bi-printer"></i> Imprimir</button>
+            <button class="top-action-btn" title="Ajustar Ordem"><i class="bi bi-list-ol"></i> Ajustar Ordem</button>
+            <div class="top-action-dropdown" title="Importar">
+                <span><i class="bi bi-upload"></i> Importar <i class="bi bi-caret-down-fill"></i></span>
+                <div class="top-action-dropdown-content">
+                    <a href="#">Planilha Excel</a>
+                    <a href="#">XML</a>
+                </div>
+            </div>
+            <div class="top-action-dropdown" title="Exportar">
+                <span><i class="bi bi-download"></i> Exportar <i class="bi bi-caret-down-fill"></i></span>
+                <div class="top-action-dropdown-content">
+                    <a href="#">Planilha Excel</a>
+                    <a href="#">XML</a>
+                </div>
+            </div>
+            <button class="top-action-btn" title="Compartilhar Pasta de Fotos"><i class="bi bi-folder-symlink"></i>
+                Compartilhar Pasta de Fotos</button>
+            <span style="margin-left:auto; color:var(--text-muted); font-size:0.98rem;">
+                Total Itens: 18 &nbsp;|&nbsp; Média=6,18 &nbsp;|&nbsp; Média=13,72
+            </span>
+        </div>
+        <!-- Barra de pesquisa + rodapé centralizados -->
+        <div class="search-footer-bar">
+            <form class="search-box" role="search" autocomplete="off">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Pesquisar no sistema..." aria-label="Pesquisar">
+            </form>
+            <div class="footer-bar-central">
+                Usuário: <span class="text-primary" style="color:var(--sidebar-accent);">miguel ramos dos santos</span>
+                <span class="text-muted" style="color:#bbb;">administrador</span>
+            </div>
+        </div>
+        <!-- Menu de navegação inferior -->
+        <div class="bottom-menu-bar">
+            <div class="bottom-menu-item active" title="Produtos">
+                <i class="bi bi-egg-fried"></i>
+                <span>Produtos</span>
+            </div>
+            <div class="bottom-menu-item" title="Complementos">
+                <i class="bi bi-emoji-laughing"></i>
+                <span>Complementos</span>
+            </div>
+            <div class="bottom-menu-item" title="Observações">
+                <i class="bi bi-chat-dots"></i>
+                <span>Observações</span>
+            </div>
+            <div class="bottom-menu-item" title="Categorias">
+                <i class="bi bi-tags"></i>
+                <span>Categorias</span>
+            </div>
+            <div class="bottom-menu-item" title="Tipos e Tamanhos">
+                <i class="bi bi-type"></i>
+                <span>Tipos/Tamanhos</span>
+            </div>
+            <div class="bottom-menu-item" title="Perguntas">
+                <i class="bi bi-question-circle"></i>
+                <span>Perguntas</span>
+            </div>
+            <div class="bottom-menu-item" title="Insumos">
+                <i class="bi bi-box-seam"></i>
+                <span>Insumos</span>
+            </div>
+            <div class="bottom-menu-item" title="Alterar em Lote">
+                <i class="bi bi-cart-plus"></i>
+                <span>Alterar em Lote</span>
+            </div>
+            <div class="bottom-menu-item" title="Alterar com NFe">
+                <i class="bi bi-file-earmark-arrow-up"></i>
+                <span>Alterar com NFe</span>
+            </div>
+        </div>
+        <!-- Kanban Board -->
+        <div class="kanban-board" id="kanbanBoard">
+            <!-- Colunas e produtos via JS -->
+        </div>
+    </div>
+
+    <script>
+        // Exemplo de produtos por status, agora com imagem
+        const produtos = [
+            { nome: "Alabama Apimentado", categoria: "Lanches", preco: "R$ 20,00", status: "Ativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Bacon Duplo", categoria: "Lanches", preco: "R$ 26,00", status: "Ativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Clássico", categoria: "Lanches", preco: "R$ 15,00", status: "Ativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Filé", categoria: "Lanches", preco: "R$ 22,00", status: "Ativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Kids", categoria: "Lanches", preco: "R$ 14,00", status: "Ativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Batata Frita Tradicional", categoria: "Porções", preco: "R$ 15,00", status: "Ativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Batata C/ Cheddar e Bacon", categoria: "Porções", preco: "R$ 20,00", status: "Ativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Vegano", categoria: "Lanches", preco: "R$ 25,00", status: "Ativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Alabama Supremo", categoria: "Lanches", preco: "R$ 22,00", status: "Ativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" },
+            // Inativos
+            { nome: "Combo Família", categoria: "Combos", preco: "R$ 49,90", status: "Inativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Pizza Calabresa", categoria: "Pizzas", preco: "R$ 39,90", status: "Inativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Pizza Portuguesa", categoria: "Pizzas", preco: "R$ 42,00", status: "Inativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Pizza Frango c/ Catupiry", categoria: "Pizzas", preco: "R$ 44,00", status: "Inativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Coxinha de Frango", categoria: "Salgados", preco: "R$ 5,00", status: "Inativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Pastel de Carne", categoria: "Salgados", preco: "R$ 6,00", status: "Inativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Suco Natural", categoria: "Bebidas", preco: "R$ 8,00", status: "Inativo", img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Água Mineral", categoria: "Bebidas", preco: "R$ 3,00", status: "Inativo", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=facearea&w=128&q=80" },
+            { nome: "Brownie", categoria: "Doces", preco: "R$ 7,00", status: "Inativo", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=128&q=80" }
+        ];
+
+        // Separar por status (simples: Ativo/Inativo)
+        const colunas = [
+            { titulo: "Ativos", status: "Ativo" },
+            { titulo: "Inativos", status: "Inativo" }
+        ];
+
+        const kanbanBoard = document.getElementById('kanbanBoard');
+        colunas.forEach(coluna => {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'kanban-column';
+            colDiv.innerHTML = `<h2>${coluna.titulo}</h2><div class="produtos-grid"></div>`;
+            const grid = colDiv.querySelector('.produtos-grid');
+            // Mostra até 9 produtos por coluna (3x3 grid)
+            produtos.filter(p => p.status === coluna.status).slice(0, 9).forEach((produto, idx) => {
+                const card = document.createElement('div');
+                card.className = 'produto-card';
+                card.style.animationDelay = `${idx * 0.08 + 0.1}s`;
+                card.innerHTML = `
+          <img class="produto-img" src="${produto.img}" alt="${produto.nome}">
+          <span class="produto-nome" title="${produto.nome}">${produto.nome}</span>
+          <span class="produto-preco">${produto.preco}</span>
+          <span class="produto-status${produto.status === "Inativo" ? " inativo" : ""}">${produto.status}</span>
+        `;
+                grid.appendChild(card);
+            });
+            kanbanBoard.appendChild(colDiv);
+        });
+
+        // Sidebar toggle (responsivo)
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const returnBtn = document.getElementById('returnSidebar');
+        const mainContent = document.getElementById('mainContent');
+        toggleBtn.onclick = () => {
+            sidebar.style.width = '60px';
+            mainContent.classList.add('minimized');
+            toggleBtn.style.display = 'none';
+            returnBtn.style.display = '';
+            document.querySelector('.sidebar-label').style.display = 'none';
+            document.querySelector('.sidebar-title').style.fontSize = '1.3rem';
+        };
+        returnBtn.onclick = () => {
+            sidebar.style.width = '240px';
+            mainContent.classList.remove('minimized');
+            toggleBtn.style.display = '';
+            returnBtn.style.display = 'none';
+            document.querySelector('.sidebar-label').style.display = '';
+            document.querySelector('.sidebar-title').style.fontSize = '1.7rem';
+        };
+    </script>
+</body>
+
+</html>
