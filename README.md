@@ -31,4 +31,79 @@
 ---
 
 ## 🧱 Estrutura do Projeto
+StructuraGrid-main/
+│
+├── frontEnd/
+│ ├── assests/
+│ │ ├── JS/ # Scripts JavaScript
+│ │ │ ├── Cadastro.js
+│ │ │ ├── Conteudo.js
+│ │ │ ├── Relatorios.js
+│ │ │ ├── financeiro.js
+│ │ │ └── main.js
+│ │ └── css/ # Estilos CSS
+│ │ ├── Cadastro.css
+│ │ ├── Conteudo.css
+│ │ ├── Login.css
+│ │ ├── Relatorio.css
+│ │ ├── financeiro.css
+│ │ └── main.css
+│ └── pages/ # Páginas HTML do sistema
+│ ├── App.html
+│ ├── Cadastro.html
+│ ├── Estoque.html
+│ ├── Home.html
+│ ├── Relatorios.html
+│ ├── financeiro.html
+│ └── login.html
 
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **HTML5** - Estrutura das páginas
+- **CSS3** - Estilização das interfaces
+- **JavaScript Vanilla** - Lógica e funcionalidades da aplicação
+
+> ⚠️ Este projeto é apenas o front-end. Para funcionamento completo, é necessário um backend (em desenvolvimento ou a ser integrado).
+
+---
+
+## 🧩 Como Usar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/StructuraGrid.git
+Navegue até a pasta do projeto:
+
+bash
+Copiar
+Editar
+cd StructuraGrid/frontEnd/pages
+Abra o arquivo login.html no navegador para iniciar o sistema.
+
+🚀 Próximas Etapas
+Implementação de backend (Node.js, Python, PHP, etc).
+
+Conexão com banco de dados (MySQL, PostgreSQL ou MongoDB).
+
+Validações de segurança e autenticação.
+
+Deploy do sistema em servidor web (como Vercel, Netlify ou VPS).
+
+👨‍💻 Autor
+Desenvolvido por [Seu Nome Aqui]
+🔗 LinkedIn
+📧 seuemail@exemplo.com
+
+📄 Licença
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+yaml
+Copiar
+Editar
+
+---
+
+Se quiser, posso incluir seus dados reais no final do README. É só me informar seu nome, LinkedIn e 
