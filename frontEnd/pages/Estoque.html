@@ -461,6 +461,22 @@
             transform: translateY(-4px) scale(1.03);
             cursor: pointer;
         }
+        /* Alertas visuais para insumos */
+        #insumos-alertas {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        #insumos-alertas .alert {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 700px;
+        }
+        .card-body > h3 {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -678,13 +694,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Gestão de Insumos (Funcionalidade) - NOVA VERSÃO CENTRALIZADA E COM ALERTAS VISUAIS -->
+    <div class="d-flex justify-content-center align-items-start w-100" style="margin-top: 32px;">
+        <div class="card shadow-lg mx-auto" style="min-width: 340px; max-width: 900px; width: 100%; background: #232529; border-radius: 16px;">
+            <div class="card-body d-flex flex-column align-items-center justify-content-center" style="width:100%;">
+                <h3 class="mb-4 text-center" style="color:#FFCC00; font-weight:bold;">
+                    <i class="bi bi-box-seam"></i> Gestão de Insumos
+                </h3>
+                <!-- Formulário para adicionar/remover insumo -->
+                <form id="form-insumo" class="d-flex flex-wrap gap-2 mb-3 justify-content-center align-items-end" onsubmit="return false;">
+                    <input type="text" id="novoInsumoNome" class="form-control" placeholder="Nome do insumo" style="max-width:180px;">
+                    <input type="number" id="novoInsumoQtd" class="form-control" placeholder="Qtd. Atual" min="0" style="max-width:120px;">
+                    <input type="number" id="novoInsumoQtdMin" class="form-control" placeholder="Qtd. Mínima" min="0" style="max-width:120px;">
+                    <input type="date" id="novoInsumoValidade" class="form-control" style="max-width:170px;">
+                    <button type="button" class="btn btn-success" onclick="adicionarInsumo()"><i class="bi bi-plus-circle"></i> Adicionar</button>
+                    <button type="button" class="btn btn-danger" onclick="removerInsumo()"><i class="bi bi-dash-circle"></i> Remover</button>
+                </form>
+                <div id="insumos-alertas" class="d-flex flex-column align-items-center"></div>
+                <div class="table-responsive w-100">
+                    <table class="table table-dark table-striped table-bordered align-middle" style="border-radius: 12px; overflow: hidden;">
+                        <thead>
+                            <tr>
+                                <th>Insumo</th>
+                                <th>Qtd. Atual</th>
+                                <th>Qtd. Mínima</th>
+                                <th>Validade</th>
+                                <th>Entrada</th>
+                                <th>Saída</th>
+                                <th>Alertas</th>
+                                <th>Histórico</th>
+                            </tr>
+                        </thead>
+                        <tbody id="insumos-lista"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Sidebar toggle logic
         const sidebar = document.getElementById('sidebar');
         const toggleBtn = document.getElementById('toggleSidebar');
         const returnBtn = document.getElementById('returnSidebar');
         function updateBarsMargin() {
-            const bars = document.querySelectorAll('.top-actions-bar, .search-footer-bar, .bottom-menu-bar, .produtos-board');
+            const bars = document.querySelectorAll('.top-actions-bar, .search-footer-bar, .bottom-menu-bar, .produtos-board, #estoque-funcional');
             bars.forEach(bar => {
                 if (sidebar.classList.contains('minimized')) {
                     bar.style.marginLeft = '72px';
@@ -705,6 +760,236 @@
         }
         // Ajusta ao carregar
         updateBarsMargin();
+
+        // --------- Funcionalidades de Estoque ---------
+        // Mock de produtos/insumos
+        let produtos = [
+            {
+                id: 1,
+                nome: "Cheeseburger Clássico",
+                quantidade: 20,
+                quantidadeMinima: 10,
+                validade: "2024-07-01",
+                historico: [
+                    { tipo: "entrada", quantidade: 10, data: "2024-06-15", origem: "compra" },
+                    { tipo: "saida", quantidade: 5, data: "2024-06-18", origem: "venda" }
+                ]
+            },
+            {
+                id: 2,
+                nome: "Batata Frita",
+                quantidade: 50,
+                quantidadeMinima: 15,
+                validade: "2024-06-25",
+                historico: [
+                    { tipo: "entrada", quantidade: 30, data: "2024-06-10", origem: "compra" },
+                    { tipo: "saida", quantidade: 10, data: "2024-06-18", origem: "venda" }
+                ]
+            }
+            // ...adicione outros produtos conforme necessário
+        ];
+
+        // IDs dos alertas fechados
+        let alertasFechados = [];
+
+        // Função para verificar alertas de vencimento e excesso de estoque (VISUAL)
+        function verificarAlertas() {
+            const hoje = new Date();
+            let alertasHtml = '';
+            produtos.forEach(produto => {
+                const validade = new Date(produto.validade);
+                const diasParaVencer = (validade - hoje) / (1000 * 60 * 60 * 24);
+
+                // Alerta de vencimento
+                if (diasParaVencer <= 5 && !alertasFechados.includes('venc_' + produto.id)) {
+                    alertasHtml += `
+                        <div class="alert alert-warning d-flex align-items-center justify-content-between py-2 mb-2 w-100" role="alert" style="font-size:1rem; max-width:700px;">
+                            <div>
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <strong>${produto.nome}:</strong> vence em ${Math.ceil(diasParaVencer)} dia(s)!
+                            </div>
+                            <button type="button" class="btn-close ms-2" aria-label="Fechar" onclick="fecharAlerta('venc_${produto.id}')"></button>
+                        </div>
+                    `;
+                }
+                // Alerta de excesso
+                if (produto.quantidade > produto.quantidadeMinima * 3 && !alertasFechados.includes('exc_' + produto.id)) {
+                    alertasHtml += `
+                        <div class="alert alert-info d-flex align-items-center justify-content-between py-2 mb-2 w-100" role="alert" style="font-size:1rem; max-width:700px;">
+                            <div>
+                                <i class="bi bi-arrow-up-circle-fill me-2"></i>
+                                <strong>${produto.nome}:</strong> está com excesso de estoque!
+                            </div>
+                            <button type="button" class="btn-close ms-2" aria-label="Fechar" onclick="fecharAlerta('exc_${produto.id}')"></button>
+                        </div>
+                    `;
+                }
+            });
+            document.getElementById('insumos-alertas').innerHTML = alertasHtml;
+        }
+
+        // Função para fechar alerta
+        function fecharAlerta(alertaId) {
+            alertasFechados.push(alertaId);
+            verificarAlertas();
+        }
+
+        // Função para registrar movimentação (entrada/saída)
+        function registrarMovimentacao(id, tipo, quantidade, origem = "manual") {
+            const produto = produtos.find(p => p.id === id);
+            if (!produto) return;
+            if (tipo === "entrada") {
+                produto.quantidade += quantidade;
+            } else if (tipo === "saida") {
+                produto.quantidade -= quantidade;
+            }
+            produto.historico.push({
+                tipo,
+                quantidade,
+                data: new Date().toISOString().slice(0, 10),
+                origem
+            });
+        }
+
+        // Função para gerar relatório de movimentação
+        function gerarRelatorioMovimentacao(id) {
+            const produto = produtos.find(p => p.id === id);
+            if (!produto) return [];
+            return produto.historico;
+        }
+
+        // Renderiza a lista de insumos e controles de entrada/saída
+        function renderInsumos() {
+            const tbody = document.getElementById('insumos-lista');
+            tbody.innerHTML = '';
+            produtos.forEach(produto => {
+                // Verifica alertas
+                let alerta = '';
+                const hoje = new Date();
+                const validade = new Date(produto.validade);
+                const diasParaVencer = (validade - hoje) / (1000 * 60 * 60 * 24);
+                if (diasParaVencer <= 5) {
+                    alerta += `<span class="badge bg-warning text-dark">Vence em ${Math.ceil(diasParaVencer)}d</span> `;
+                }
+                if (produto.quantidade <= produto.quantidadeMinima) {
+                    alerta += `<span class="badge bg-danger">Estoque Mínimo</span> `;
+                }
+                if (produto.quantidade > produto.quantidadeMinima * 3) {
+                    alerta += `<span class="badge bg-info text-dark">Excesso</span>`;
+                }
+
+                tbody.innerHTML += `
+                <tr>
+                    <td>${produto.nome}</td>
+                    <td>${produto.quantidade}</td>
+                    <td>${produto.quantidadeMinima}</td>
+                    <td>${produto.validade}</td>
+                    <td>
+                        <input type="number" min="1" style="width:60px" id="ent_${produto.id}">
+                        <button class="btn btn-success btn-sm" onclick="entradaProduto(${produto.id})">+</button>
+                    </td>
+                    <td>
+                        <input type="number" min="1" style="width:60px" id="sai_${produto.id}">
+                        <button class="btn btn-danger btn-sm" onclick="saidaProduto(${produto.id})">-</button>
+                    </td>
+                    <td>${alerta}</td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm" onclick="mostrarHistorico(${produto.id})">Ver</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+
+        // Função para entrada de produto
+        function entradaProduto(id) {
+            const input = document.getElementById('ent_' + id);
+            const qtd = parseInt(input.value);
+            if (qtd > 0) {
+                registrarMovimentacao(id, "entrada", qtd, "manual");
+                verificarAlertas();
+                renderInsumos();
+                input.value = '';
+            }
+        }
+
+        // Função para saída de produto
+        function saidaProduto(id) {
+            const input = document.getElementById('sai_' + id);
+            const qtd = parseInt(input.value);
+            if (qtd > 0) {
+                registrarMovimentacao(id, "saida", qtd, "manual");
+                verificarAlertas();
+                renderInsumos();
+                input.value = '';
+            }
+        }
+
+        // Mostra histórico em alert (pode ser melhorado para modal)
+        function mostrarHistorico(id) {
+            const hist = gerarRelatorioMovimentacao(id);
+            if (!hist.length) {
+                alert("Sem histórico.");
+                return;
+            }
+            let msg = "Histórico de movimentação:\n";
+            hist.forEach(h => {
+                msg += `${h.data} - ${h.tipo.toUpperCase()} - ${h.quantidade} (${h.origem})\n`;
+            });
+            alert(msg);
+        }
+
+        // Adicionar/remover insumo
+        function adicionarInsumo() {
+            const nome = document.getElementById('novoInsumoNome').value.trim();
+            const quantidade = parseInt(document.getElementById('novoInsumoQtd').value);
+            const quantidadeMinima = parseInt(document.getElementById('novoInsumoQtdMin').value);
+            const validade = document.getElementById('novoInsumoValidade').value;
+            if (!nome) {
+                alert('Digite o nome do insumo.');
+                return;
+            }
+            if (isNaN(quantidade) || isNaN(quantidadeMinima) || !validade) {
+                alert('Preencha todos os campos corretamente.');
+                return;
+            }
+            // Gera novo ID
+            const novoId = produtos.length ? Math.max(...produtos.map(p => p.id)) + 1 : 1;
+            produtos.push({
+                id: novoId,
+                nome,
+                quantidade,
+                quantidadeMinima,
+                validade,
+                historico: []
+            });
+            document.getElementById('form-insumo').reset();
+            verificarAlertas();
+            renderInsumos();
+        }
+
+        function removerInsumo() {
+            const nome = document.getElementById('novoInsumoNome').value.trim().toLowerCase();
+            if (!nome) {
+                alert('Digite o nome do insumo para remover.');
+                return;
+            }
+            const idx = produtos.findIndex(p => p.nome.toLowerCase() === nome);
+            if (idx === -1) {
+                alert('Insumo não encontrado.');
+                return;
+            }
+            produtos.splice(idx, 1);
+            document.getElementById('form-insumo').reset();
+            verificarAlertas();
+            renderInsumos();
+        }
+
+        // Atualiza a lista ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            verificarAlertas();
+            renderInsumos();
+        });
     </script>
 </body>
 </html>
