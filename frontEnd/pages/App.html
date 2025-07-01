@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Structura Grid - Organização e Gerenciamento de Estoque</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #212529;
+            --cor-sidebar: #212529;
+            --cor-barra: #232529;
+            --cor-azul: #004721;
+            --cor-amarelo: #FFCC00;
+            --cor-verde-escuro: #004721;
+            --cor-cinza-borda: #343a40;
+            --cor-cinza-claro: #bbb;
+            --cor-verde-claro: #4ade80;
+            --cor-vermelho-claro: #f87171;
+            --cor-branco: #fff;
+        }
+        body {
+            background: var(--cor-fundo);
+            color: var(--cor-branco);
+            min-height: 100vh;
+        }
+        .navbar {
+            background: var(--cor-barra);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--cor-amarelo) !important;
+            letter-spacing: 1px;
+            font-size: 1.7rem;
+        }
+        .nav-link, .navbar-nav .nav-link.active {
+            color: var(--cor-branco) !important;
+            font-weight: 500;
+        }
+        .btn-main {
+            background: linear-gradient(90deg, var(--cor-azul) 60%, var(--cor-amarelo) 100%);
+            color: var(--cor-branco);
+            border: none;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px 32px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-main:hover {
+            background: linear-gradient(90deg, var(--cor-verde-escuro) 60%, var(--cor-amarelo) 100%);
+            color: var(--cor-branco);
+            transform: scale(1.04);
+        }
+        .hero-section {
+            padding: 80px 0 40px 0;
+            background: var(--cor-barra);
+        }
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--cor-azul);
+            margin-bottom: 18px;
+        }
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--cor-amarelo);
+            margin-bottom: 24px;
+        }
+        .hero-desc {
+            color: #d1d8e0;
+            font-size: 1.15rem;
+            margin-bottom: 32px;
+        }
+        .hero-img {
+            max-width: 100%;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #0003;
+            border: 3px solid var(--cor-cinza-borda);
+            background: var(--cor-branco);
+        }
+        .features-section {
+            background: var(--cor-sidebar);
+            padding: 60px 0 40px 0;
+        }
+        .features-title {
+            color: var(--cor-amarelo);
+            font-weight: 700;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--cor-amarelo);
+            margin-bottom: 16px;
+        }
+        .feature-title {
+            color: var(--cor-azul);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .feature-card {
+            background: var(--cor-barra);
+            border: 2px solid var(--cor-cinza-borda);
+            border-radius: 18px;
+            padding: 32px 20px;
+            color: #d1d8e0;
+            min-height: 220px;
+            box-shadow: 0 4px 24px #0002;
+            transition: transform 0.18s, box-shadow 0.18s, border 0.18s;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--cor-amarelo);
+            background: linear-gradient(120deg, var(--cor-barra) 30%, var(--cor-amarelo) 100%);
+        }
+        .about-section {
+            background: var(--cor-barra);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #0003;
+            padding: 48px 40px;
+            color: #d1d8e0;
+            font-size: 1.18rem;
+            line-height: 1.7;
+            margin: 40px auto 0 auto;
+            max-width: 1100px;
+        }
+        .about-section h2 {
+            color: var(--cor-amarelo);
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        .about-section strong {
+            color: var(--cor-azul);
+        }
+        .about-section ul {
+            color: var(--cor-amarelo);
+        }
+        .footer {
+            background: var(--cor-sidebar);
+            color: var(--cor-cinza-claro);
+            text-align: center;
+            padding: 32px 0 16px 0;
+            font-size: 1.08rem;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 -2px 12px #0002;
+            margin-top: 60px;
+        }
+        /* Badges e alertas customizados */
+        .badge.bg-warning {
+            background: #ffc107 !important;
+            color: #232529 !important;
+        }
+        .badge.bg-danger {
+            background: var(--cor-vermelho-claro) !important;
+            color: var(--cor-branco) !important;
+        }
+        .badge.bg-info {
+            background: #0dcaf0 !important;
+            color: #232529 !important;
+        }
+        /* Responsividade */
+        @media (max-width: 991px) {
+            .hero-title { font-size: 2rem; }
+            .hero-section { padding: 40px 0 20px 0; }
+            .about-section { padding: 24px 10px; }
+        }
+        @media (max-width: 600px) {
+            .hero-title { font-size: 1.3rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .about-section h2 { font-size: 1.1rem; }
+            .footer { font-size: 0.95rem; padding: 18px 0 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="sidebar-label" style="margin-left:0.1px;"> <span class="sidebar-title " style="color:#ffc107;">S</span>tructuraGrid</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+                    <li class="nav-item"><a class="btn btn-main ms-3" href="login.html">Entrar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Organize e Gerencie seu Estoque com o Structura Grid</h1>
+                    <div class="hero-subtitle">O futuro da gestão de estoque para empresas modernas</div>
+                    <div class="hero-desc">
+                        O <strong>Structura Grid</strong> oferece controle total, relatórios inteligentes e uma experiência visual moderna para sua empresa crescer sem complicações. Tenha segurança, praticidade e tecnologia de ponta para o seu negócio.
+                    </div>
+                    <a href="login.html" class="btn btn-main">Experimente Agora</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="https://img.freepik.com/vetores-gratis/ilustracao-do-conceito-de-estoque_114360-1126.jpg?w=826&t=st=1719850000~exp=1719850600~hmac=7e0e7e3e9e7e7e7e7e7e7e7e7e7e7e7e" alt="Estoque moderno" class="hero-img mt-4 mt-lg-0">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col">
+                    <h2 class="features-title">Recursos que fazem a diferença</h2>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">⏱️</div>
+                        <div class="feature-title">Controle em Tempo Real</div>
+                        Monitore entradas, saídas e níveis de produtos instantaneamente.
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Relatórios Detalhados</div>
+                        Gere relatórios completos para tomada de decisão rápida e eficiente.
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🖥️</div>
+                        <div class="feature-title">Interface Intuitiva</div>
+                        Navegação simples, visual agradável e fácil de usar em qualquer dispositivo.
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">Segurança e Praticidade</div>
+                        Seus dados protegidos e acessíveis, com backup automático e suporte dedicado.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section class="about-section" id="sobre">
+        <h2>Por que escolher o <strong>Structura Grid</strong>?</h2>
+        <p>
+            O Structura Grid foi desenvolvido para empresas que buscam eficiência, segurança e facilidade na gestão de estoques. Com uma interface intuitiva e recursos avançados, você tem o controle total dos seus produtos, reduz perdas e aumenta a produtividade.
+        </p>
+        <p>
+            Nossa plataforma é totalmente online, permitindo acesso de qualquer lugar e a qualquer momento. Com relatórios inteligentes, você toma decisões estratégicas baseadas em dados reais e atualizados.
+        </p>
+        <p>
+            <strong>Structura Grid</strong> é a solução ideal para quem deseja crescer com organização, tecnologia e tranquilidade.
+        </p>
+        <hr style="border: 0; border-top: 1px solid var(--cor-cinza-borda); margin: 32px 0;">
+        <h2>Funcionalidades Exclusivas</h2>
+        <ul style="margin-left: 1.2em;">
+            <li><strong>Alertas automáticos:</strong> Receba notificações sobre estoques mínimos, vencimentos e movimentações críticas.</li>
+            <li><strong>Controle de múltiplos depósitos:</strong> Gerencie diferentes locais de armazenamento em uma única plataforma.</li>
+            <li><strong>Histórico detalhado:</strong> Consulte todas as movimentações e alterações realizadas no estoque.</li>
+            <li><strong>Cadastro de usuários:</strong> Defina permissões e acompanhe o que cada colaborador faz no sistema.</li>
+            <li><strong>Integração com sistemas:</strong> Conecte o Structura Grid ao seu ERP ou outros softwares via API.</li>
+        </ul>
+        <hr style="border: 0; border-top: 1px solid var(--cor-cinza-borda); margin: 32px 0;">
+        <h2>Vantagens para o seu negócio</h2>
+        <p>
+            <strong>✔ Redução de perdas:</strong> Evite desperdícios e rupturas de estoque.<br>
+            <strong>✔ Decisões rápidas:</strong> Tenha informações confiáveis sempre à mão.<br>
+            <strong>✔ Facilidade de uso:</strong> Treinamento rápido para toda a equipe.<br>
+            <strong>✔ Suporte dedicado:</strong> Equipe pronta para ajudar sempre que precisar.<br>
+            <strong>✔ Segurança:</strong> Seus dados protegidos com criptografia e backups automáticos.
+        </p>
+        <hr style="border: 0; border-top: 1px solid var(--cor-cinza-borda); margin: 32px 0;">
+        <h2>Para quem é o Structura Grid?</h2>
+        <p>
+            Indicado para pequenas, médias e grandes empresas, indústrias, comércios, distribuidoras, farmácias, supermercados, oficinas, escolas e qualquer organização que precise de controle eficiente de estoque.
+        </p>
+        <p>
+            <strong>Structura Grid</strong> é flexível, escalável e pronto para crescer junto com o seu negócio!
+        </p>
+    </section>
+
+
+    <div class="footer">
+        &copy; 2025 Structura Grid. Todos os direitos reservados.
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
