@@ -7,12 +7,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    body, html {
+    body,
+    html {
       background: #181a1b;
       color: #fff;
       min-height: 100vh;
       margin: 0;
     }
+
     .sidebar {
       width: 250px;
       height: 100vh;
@@ -28,9 +30,11 @@
       z-index: 100;
       transition: width 0.3s cubic-bezier(.4, 2, .6, 1), background 0.2s;
     }
+
     .sidebar.minimized {
       width: 72px;
     }
+
     .sidebar .sidebar-header {
       font-size: 1.5rem;
       font-weight: bold;
@@ -41,11 +45,13 @@
       transition: padding 0.3s;
       position: relative;
     }
+
     .sidebar.minimized .sidebar-header {
       justify-content: center;
       padding: 1.5rem 0 1rem 0;
       gap: 6px;
     }
+
     .sidebar .toggle-btn {
       background: none;
       border: none;
@@ -56,6 +62,7 @@
       transition: color 0.2s;
       outline: none;
     }
+
     .sidebar .return-btn {
       display: none;
       background: none;
@@ -67,29 +74,36 @@
       align-items: center;
       justify-content: center;
     }
+
     .sidebar.minimized .toggle-btn {
       display: none;
     }
+
     .sidebar.minimized .return-btn {
       display: inline-flex;
     }
+
     .sidebar .sidebar-title {
       font-size: 2rem;
       font-weight: bold;
       color: #FFCC00;
       line-height: 1;
     }
+
     .sidebar .sidebar-label {
       color: #fff;
     }
+
     .sidebar.minimized .sidebar-label {
       display: none;
     }
+
     .sidebar .nav {
       flex-direction: column;
       width: 100%;
       margin-top: 1rem;
     }
+
     .sidebar .nav-link {
       width: 100%;
       height: 48px;
@@ -105,20 +119,24 @@
       position: relative;
       text-decoration: none;
     }
+
     .sidebar .nav-link i {
       font-size: 1.5rem;
       min-width: 24px;
       text-align: center;
     }
+
     .sidebar .nav-link.active,
     .sidebar .nav-link:hover {
       background: #004721;
       color: #fff;
     }
+
     .sidebar .nav-link.active i,
     .sidebar .nav-link:hover i {
       color: #fff;
     }
+
     .sidebar.minimized .nav-link {
       justify-content: center;
       padding: 0;
@@ -128,21 +146,26 @@
       height: 48px;
       margin: 0 auto 8px auto;
     }
+
     .sidebar.minimized .nav-link span {
       display: none;
     }
+
     .sidebar .nav-link span {
       transition: opacity 0.2s;
     }
+
     .sidebar.minimized .nav-link i {
       color: #fff;
     }
+
     .sidebar.minimized .nav-link.active,
     .sidebar.minimized .nav-link:hover {
       background: #004721;
       color: #fff;
       transform: scale(1.03);
     }
+
     .sidebar .sidebar-footer {
       padding: 1rem;
       border-top: 1px solid #343a40;
@@ -150,31 +173,38 @@
       align-items: center;
       gap: 10px;
     }
+
     .sidebar.minimized .sidebar-footer {
       justify-content: center;
       padding: 1rem 0;
     }
+
     .sidebar .sidebar-footer img {
       width: 32px;
       height: 32px;
       border-radius: 50%;
     }
+
     .sidebar .sidebar-footer span {
       color: #fff;
       font-size: 1rem;
     }
+
     .sidebar.minimized .sidebar-footer span {
       display: none;
     }
+
     .sidebar.minimized .sidebar-footer i {
       color: #fff;
       margin-left: 4px;
       font-size: 1rem;
     }
+
     .sidebar .divider {
       border-bottom: 1px solid #343a40;
       margin: 0.5rem 0;
     }
+
     .main-content {
       margin-left: 250px;
       background: #181a1b;
@@ -182,15 +212,18 @@
       transition: margin-left 0.3s cubic-bezier(.4, 2, .6, 1);
       padding: 0;
     }
+
     .sidebar.minimized~.main-content {
       margin-left: 72px;
     }
+
     .top-menu-wrapper {
       margin-left: 0;
       background: #23272a;
       padding: 24px 0 16px 0;
       border-bottom: 1px solid #343a40;
     }
+
     .top-search-bar {
       display: flex;
       align-items: center;
@@ -203,6 +236,7 @@
       width: 100%;
       margin: 0 auto 16px auto;
     }
+
     .top-search-bar input {
       background: transparent;
       border: none;
@@ -212,18 +246,23 @@
       width: 100%;
       padding: 6px 8px;
     }
+
     .top-search-bar i {
       color: #004721;
       font-size: 1.3rem;
       margin-right: 10px;
     }
+
     .top-menu-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 24px;
       justify-content: center;
     }
-    .top-menu-card, .top-menu-card-middle, .top-menu-card-end {
+
+    .top-menu-card,
+    .top-menu-card-middle,
+    .top-menu-card-end {
       background: #23272a;
       border-radius: 14px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
@@ -239,19 +278,24 @@
       border: 2px solid transparent;
       box-sizing: border-box;
     }
-    .top-menu-card:hover, .top-menu-card-middle:hover, .top-menu-card-end:hover {
+
+    .top-menu-card:hover,
+    .top-menu-card-middle:hover,
+    .top-menu-card-end:hover {
       box-shadow: 0 8px 32px rgba(0, 71, 33, 0.5);
       border: 2px solid #004721;
       transform: translateY(-4px) scale(1.03);
     }
+
     .top-menu-icon {
       width: 48px;
       height: 48px;
       margin-bottom: 10px;
       border-radius: 8px;
       background: #181a1b;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     }
+
     .top-menu-label {
       font-size: 1.1rem;
       font-weight: 600;
@@ -259,39 +303,57 @@
       margin-bottom: 4px;
       text-align: center;
     }
+
     .top-menu-desc {
       font-size: 0.98rem;
       color: #bbb;
       text-align: center;
     }
+
     /* Modal custom */
-    #formasPagamentoModal, #modalAddForma {
+    #formasPagamentoModal,
+    #modalAddForma,
+    #modalReceber {
       display: none;
       position: fixed;
       z-index: 9999;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(24,26,27,0.85);
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 26, 27, 0.85);
       align-items: center;
       justify-content: center;
     }
-    #formasPagamentoModal.active, #modalAddForma.active {
+
+    #formasPagamentoModal.active,
+    #modalAddForma.active,
+    #modalReceber.active {
       display: flex;
       animation: fadeIn 0.2s;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
+
     .modal-content {
       background: #23272a;
       border-radius: 16px;
       box-shadow: 0 2px 16px #0003;
       padding: 0;
       min-width: 340px;
-      max-width: 420px;
+      max-width: 600px;
       width: 100%;
       color: #fff;
     }
+
     .modal-header {
       background: #181a1b;
       color: #FFCC00;
@@ -304,6 +366,7 @@
       justify-content: space-between;
       font-size: 1.15rem;
     }
+
     .modal-header .btn-close {
       background: none;
       border: none;
@@ -312,9 +375,11 @@
       cursor: pointer;
       margin-left: 12px;
     }
+
     .modal-body {
       padding: 18px 20px;
     }
+
     .modal-footer {
       padding: 12px 20px;
       background: #181a1b;
@@ -324,11 +389,13 @@
       justify-content: flex-end;
       gap: 10px;
     }
+
     .consumer-actions {
       margin-bottom: 12px;
       display: flex;
       gap: 10px;
     }
+
     .consumer-table {
       width: 100%;
       background: #23272a;
@@ -337,27 +404,34 @@
       overflow: hidden;
       margin-bottom: 0;
     }
+
     .consumer-table th {
       background: #181a1b;
       color: #FFCC00;
       border-bottom: 2px solid #343a40;
     }
+
     .consumer-table td {
       background: #23272a;
       color: #fff;
     }
+
     .consumer-table tr {
       transition: box-shadow 0.3s;
     }
-    .consumer-table tr.selected, .consumer-table tr:active {
+
+    .consumer-table tr.selected,
+    .consumer-table tr:active {
       box-shadow: 0 0 0 3px #FFCC00, 0 0 12px #FFCC0088;
       transition: box-shadow 0.3s;
     }
+
     .tab-list {
       display: flex;
       gap: 10px;
       margin-bottom: 16px;
     }
+
     .tab-list button {
       background: #181a1b;
       color: #FFCC00;
@@ -368,70 +442,96 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
     }
-    .tab-list button.active, .tab-list button:hover {
+
+    .tab-list button.active,
+    .tab-list button:hover {
       background: #004721;
       color: #fff;
     }
+
     .tab-pane {
       display: none;
     }
+
     .tab-pane.active {
       display: block;
       animation: fadeIn 0.2s;
     }
-    .btn-primary, .btn-outline-primary, .btn-danger, .btn-secondary {
+
+    .btn-primary,
+    .btn-outline-primary,
+    .btn-danger,
+    .btn-secondary {
       border-radius: 8px;
       font-weight: 500;
       transition: background 0.2s, color 0.2s;
     }
+
     .btn-primary {
       background: #004721;
       border: none;
       color: #fff;
     }
-    .btn-primary:hover, .btn-primary:focus {
+
+    .btn-primary:hover,
+    .btn-primary:focus {
       background: #22c55e;
       color: #fff;
     }
+
     .btn-outline-primary {
       border: 1px solid #004721;
       color: #004721;
       background: transparent;
     }
-    .btn-outline-primary:hover, .btn-outline-primary:focus {
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus {
       background: #004721;
       color: #fff;
     }
+
     .btn-danger {
       background: #b91c1c;
       border: none;
       color: #fff;
     }
-    .btn-danger:hover, .btn-danger:focus {
+
+    .btn-danger:hover,
+    .btn-danger:focus {
       background: #ef4444;
       color: #fff;
     }
+
     .btn-secondary {
       background: #23272a;
       border: none;
       color: #fff;
     }
-    .btn-secondary:hover, .btn-secondary:focus {
+
+    .btn-secondary:hover,
+    .btn-secondary:focus {
       background: #181a1b;
       color: #FFCC00;
     }
+
     @media (max-width: 900px) {
       .main-content {
         margin-left: 72px;
       }
+
       .top-menu-bar {
         gap: 12px;
       }
-      .top-menu-card, .top-menu-card-middle, .top-menu-card-end {
+
+      .top-menu-card,
+      .top-menu-card-middle,
+      .top-menu-card-end {
         min-width: 120px;
         max-width: 160px;
         padding: 12px 6px 10px 6px;
       }
+
       .top-menu-icon {
         width: 32px;
         height: 32px;
@@ -509,7 +609,7 @@
           <div class="top-menu-label">Contas a Pagar</div>
           <div class="top-menu-desc">Contas a Pagar / Receber</div>
         </div>
-        <div class="top-menu-card-middle">
+        <div class="top-menu-card-middle" id="abrirReceber" style="cursor:pointer;">
           <img class="top-menu-icon" src="https://img.icons8.com/color/48/000000/money-transfer.png"
             alt="Contas a Receber" style="transform: scaleX(-1);" />
           <div class="top-menu-label">Contas a Receber</div>
@@ -534,7 +634,8 @@
         <div class="shadow modal-content">
           <div class="modal-header">
             <h5><i class="bi bi-credit-card-2-front me-2"></i>Formas de Pagamento</h5>
-            <button class="btn-close" onclick="document.getElementById('formasPagamentoModal').classList.remove('active')">
+            <button class="btn-close"
+              onclick="document.getElementById('formasPagamentoModal').classList.remove('active')">
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
@@ -761,12 +862,54 @@
           <button class="btn-close" id="closeAddForma" title="Fechar">&times;</button>
         </div>
         <form id="formAddForma" autocomplete="off">
-          <input type="text" id="inputAddForma" placeholder="Digite o nome da nova forma" maxlength="40" required autofocus>
+          <input type="text" id="inputAddForma" placeholder="Digite o nome da nova forma" maxlength="40" required
+            autofocus>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="cancelAddForma">Cancelar</button>
             <button type="submit" class="btn btn-primary">Adicionar</button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- Modal Contas a Receber com sub-abas -->
+    <div id="modalReceber">
+      <div class="modal-content">
+        <div class="modal-header">
+          Contas a Receber
+          <button class="btn-close" id="fecharReceber" title="Fechar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="tab-list" id="tabsReceber">
+            <button type="button" class="active" data-tab="tab-lista-receber">Lista de Recebimentos</button>
+            <button type="button" data-tab="tab-adicionar-receber">Adicionar Recebimento</button>
+          </div>
+          <div class="tab-pane active" id="tab-lista-receber">
+            <table class="consumer-table mb-2">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="listaReceber"></tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab-adicionar-receber">
+            <form id="formReceber" autocomplete="off">
+              <input type="text" id="descReceber" placeholder="Descrição" required maxlength="40"
+                class="form-control mb-2">
+              <input type="number" id="valorReceber" placeholder="Valor" required min="0" step="0.01"
+                class="form-control mb-2">
+              <input type="date" id="dataReceber" required class="form-control mb-2">
+              <div class="modal-footer p-0">
+                <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -824,6 +967,68 @@
         }
       });
     });
+
+    // Contas a Receber - funcionalidade de sub-aba
+    const modalReceber = document.getElementById('modalReceber');
+    const abrirReceber = document.getElementById('abrirReceber');
+    const fecharReceber = document.getElementById('fecharReceber');
+    const formReceber = document.getElementById('formReceber');
+    const listaReceber = document.getElementById('listaReceber');
+    const dataReceber = document.getElementById('dataReceber');
+    let receberArr = [];
+
+    abrirReceber.onclick = () => {
+      modalReceber.classList.add('active');
+      renderReceber();
+      // Abre sempre na aba de lista
+      document.querySelectorAll('#tabsReceber button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#modalReceber .tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelector('#tabsReceber button[data-tab="tab-lista-receber"]').classList.add('active');
+      document.getElementById('tab-lista-receber').classList.add('active');
+    }
+    fecharReceber.onclick = () => { modalReceber.classList.remove('active'); }
+    formReceber.onsubmit = e => {
+      e.preventDefault();
+      receberArr.push({
+        desc: descReceber.value,
+        valor: parseFloat(valorReceber.value).toFixed(2),
+        data: dataReceber.value
+      });
+      descReceber.value = '';
+      valorReceber.value = '';
+      dataReceber.value = '';
+      renderReceber();
+      // Volta para a aba de lista
+      document.querySelectorAll('#tabsReceber button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#modalReceber .tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelector('#tabsReceber button[data-tab="tab-lista-receber"]').classList.add('active');
+      document.getElementById('tab-lista-receber').classList.add('active');
+    };
+    function renderReceber() {
+      listaReceber.innerHTML = receberArr.length === 0
+        ? `<tr><td colspan="4" class="text-center text-muted">Nenhum recebimento cadastrado.</td></tr>`
+        : receberArr.map((item, i) =>
+          `<tr>
+            <td>${item.desc}</td>
+            <td>R$ ${item.valor}</td>
+            <td>${item.data ? new Date(item.data).toLocaleDateString('pt-BR') : ''}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removerReceber(${i})">Excluir</button></td>
+          </tr>`
+        ).join('');
+    }
+    window.removerReceber = i => { receberArr.splice(i, 1); renderReceber(); };
+
+    // Tabs do modal de contas a receber
+    document.querySelectorAll('#tabsReceber button').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('#tabsReceber button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#modalReceber .tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+      });
+    });
+
   </script>
 </body>
+
 </html>
