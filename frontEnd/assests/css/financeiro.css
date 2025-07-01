@@ -304,7 +304,8 @@ body,html {
     #modalPagar,
     #modalReceber,
     #formasPagamentoModal,
-    #modalAddForma {
+    #modalAddForma,
+    #modalFornecedores {
       display: none;
       position: fixed;
       z-index: 9999;
@@ -320,7 +321,8 @@ body,html {
     #formasPagamentoModal.active,
     #modalAddForma.active,
     #modalReceber.active,
-    #modalPagar.active {
+    #modalPagar.active,
+    #modalFornecedores.active {
       display: flex;
       animation: fadeIn 0.2s;
     }

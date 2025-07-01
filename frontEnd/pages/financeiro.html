@@ -68,7 +68,7 @@
           <div class="top-menu-label">Categoria<br>de Contas</div>
           <div class="top-menu-desc">Organização de Contas</div>
         </div>
-        <div class="top-menu-card-middle">
+        <div class="top-menu-card-middle" id="abrirFornecedores" style="cursor:pointer;">
           <img class="top-menu-icon" src="https://img.icons8.com/color/48/000000/factory.png" alt="Fornecedores" />
           <div class="top-menu-label">Fornecedores</div>
           <div class="top-menu-desc">Organização de Contas</div>
@@ -341,6 +341,45 @@
         </form>
       </div>
     </div>
+    <!-- Modal Fornecedores com sub-abas -->
+    <div id="modalFornecedores">
+      <div class="modal-content">
+        <div class="modal-header">
+          Fornecedores
+          <button class="btn-close" id="fecharFornecedores" title="Fechar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="tab-list" id="tabsFornecedores">
+            <button type="button" class="active" data-tab="tab-lista-fornecedores">Lista de Fornecedores</button>
+            <button type="button" data-tab="tab-adicionar-fornecedor">Adicionar Fornecedor</button>
+          </div>
+          <div class="tab-pane active" id="tab-lista-fornecedores">
+            <table class="consumer-table mb-2">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Contato</th>
+                  <th>CNPJ/CPF</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="listaFornecedores"></tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab-adicionar-fornecedor">
+            <form id="formFornecedor" autocomplete="off">
+              <input type="text" id="nomeFornecedor" placeholder="Nome do Fornecedor" required maxlength="40"
+                class="form-control mb-2">
+              <input type="text" id="contatoFornecedor" placeholder="Contato" maxlength="40" class="form-control mb-2">
+              <input type="text" id="docFornecedor" placeholder="CNPJ ou CPF" maxlength="18" class="form-control mb-2">
+              <div class="modal-footer p-0">
+                <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal Contas a Receber com sub-abas -->
     <div id="modalReceber">
@@ -387,7 +426,7 @@
   <div id="modalPagar">
     <div class="modal-content">
       <div class="modal-header">
-        Contas a pagar
+        Contas a Pagar
         <button class="btn-close" id="fecharPagar" title="Fechar">&times;</button>
       </div>
       <div class="modal-body">
@@ -478,6 +517,73 @@
       });
     });
 
+    // Modal Fornecedores - funcionalidade de sub-aba
+    const modalFornecedores = document.getElementById('modalFornecedores');
+    const abrirFornecedores = document.getElementById('abrirFornecedores');
+    const fecharFornecedores = document.getElementById('fecharFornecedores');
+    const formFornecedor = document.getElementById('formFornecedor');
+    const listaFornecedores = document.getElementById('listaFornecedores');
+    const nomeFornecedor = document.getElementById('nomeFornecedor');
+    const contatoFornecedor = document.getElementById('contatoFornecedor');
+    const docFornecedor = document.getElementById('docFornecedor');
+    let fornecedoresArr = [];
+
+    if (abrirFornecedores) {
+      abrirFornecedores.onclick = () => {
+        modalFornecedores.classList.add('active');
+        renderFornecedores();
+        // Abre sempre na aba de lista
+        document.querySelectorAll('#tabsFornecedores button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#modalFornecedores .tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('#tabsFornecedores button[data-tab="tab-lista-fornecedores"]').classList.add('active');
+        document.getElementById('tab-lista-fornecedores').classList.add('active');
+      }
+    }
+    if (fecharFornecedores) {
+      fecharFornecedores.onclick = () => { modalFornecedores.classList.remove('active'); }
+    }
+    if (formFornecedor) {
+      formFornecedor.onsubmit = e => {
+        e.preventDefault();
+        fornecedoresArr.push({
+          nome: nomeFornecedor.value,
+          contato: contatoFornecedor.value,
+          doc: docFornecedor.value
+        });
+        nomeFornecedor.value = '';
+        contatoFornecedor.value = '';
+        docFornecedor.value = '';
+        renderFornecedores();
+        // Volta para a aba de lista
+        document.querySelectorAll('#tabsFornecedores button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#modalFornecedores .tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('#tabsFornecedores button[data-tab="tab-lista-fornecedores"]').classList.add('active');
+        document.getElementById('tab-lista-fornecedores').classList.add('active');
+      };
+    }
+    function renderFornecedores() {
+      listaFornecedores.innerHTML = fornecedoresArr.length === 0
+        ? `<tr><td colspan="4" class="text-center text-muted">Nenhum fornecedor cadastrado.</td></tr>`
+        : fornecedoresArr.map((item, i) =>
+          `<tr>
+        <td>${item.nome}</td>
+        <td>${item.contato}</td>
+        <td>${item.doc}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="removerFornecedor(${i})">Excluir</button></td>
+      </tr>`
+        ).join('');
+    }
+    window.removerFornecedor = i => { fornecedoresArr.splice(i, 1); renderFornecedores(); };
+
+    // Tabs do modal de fornecedores
+    document.querySelectorAll('#tabsFornecedores button').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('#tabsFornecedores button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#modalFornecedores .tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+      });
+    });
     // Contas a Receber - funcionalidade de sub-aba
     const modalReceber = document.getElementById('modalReceber');
     const abrirReceber = document.getElementById('abrirReceber');
