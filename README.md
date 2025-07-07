@@ -92,10 +92,7 @@ Validações de segurança e autenticação.
 
 Deploy do sistema em servidor web (como Vercel, Netlify ou VPS).
 
-👨‍💻 Autor
-Desenvolvido por [Seu Nome Aqui]
-🔗 LinkedIn
-📧 seuemail@exemplo.com
+
 
 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
